@@ -1,5 +1,6 @@
 package com.hansen.sqlitetopostgres.service;
 
+import com.hansen.sqlitetopostgres.entity.postgres.TableA;
 import com.hansen.sqlitetopostgres.entity.postgres.TableB;
 import com.hansen.sqlitetopostgres.model.Data;
 import com.hansen.sqlitetopostgres.repo.postgres.TableARepository;
@@ -26,33 +27,17 @@ public class PostgresPersistenceServiceImpl implements PostgresPersistenceServic
         new Thread(() -> doAsyncTranslateToPostgres(SQLiteData)).start();
     }
     private void doAsyncTranslateToPostgres(Data SQLiteData){
-        List<com.hansen.sqlitetopostgres.entity.postgres.TableA> postgresTableAData =
-                SQLiteData.getTableAList().stream()
-                        .map(com.hansen.sqlitetopostgres.entity.postgres.TableA::transformSQLiteTableA)
-                        .collect(Collectors.toList());
 
-        if(postgresTableAData == null || postgresTableAData.isEmpty()){
-            return;
-        }
-
-        List<com.hansen.sqlitetopostgres.entity.postgres.TableB> postgresTableBData =
-                SQLiteData.getTableBList().stream()
-                        .map(com.hansen.sqlitetopostgres.entity.postgres.TableB::transformSQLiteTableB)
-                        .collect(Collectors.toList());
-
-        if(postgresTableBData == null || postgresTableBData.isEmpty()){
-            return;
-        }
-
-        persistToPostgres(postgresTableAData, postgresTableBData);
+        persistToPostgres(SQLiteData.getTableAList(), SQLiteData.getTableBList());
     }
 
-    private void persistToPostgres(List<com.hansen.sqlitetopostgres.entity.postgres.TableA> tableAList,
+    private void persistToPostgres(List<TableA> tableAList,
                                    List<TableB> tableBList)
     {
-        tableARepository.saveAll(tableAList);
         tableBRepository.saveAll(tableBList);
+        tableARepository.saveAll(tableAList);
         log.info("Data persisted to PostgreSQL.");
+
     }
 
 }

@@ -1,7 +1,7 @@
 package com.hansen.sqlitetopostgres.model;
 
-import com.hansen.sqlitetopostgres.entity.sqlite.TableA;
-import com.hansen.sqlitetopostgres.entity.sqlite.TableB;
+import com.hansen.sqlitetopostgres.entity.postgres.TableA;
+import com.hansen.sqlitetopostgres.entity.postgres.TableB;
 import lombok.Builder;
 
 import java.util.List;

@@ -10,8 +10,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "TableA")
-@Builder
+@Table(name = "tablea")
 public class TableA {
     @Id
     @Type(type="uuid-char")
@@ -24,11 +23,15 @@ public class TableA {
     @Column(name = "number")
     private int number;
 
-    public static TableA transformSQLiteTableA(com.hansen.sqlitetopostgres.entity.sqlite.TableA dto){
-        return TableA.builder()
-                .uuid(dto.getUuid())
-                .title(dto.getTitle())
-                .number(dto.getNumber())
-                .build();
+    public TableA()
+    {
+
     }
+
+    public TableA(UUID uuid, String title, int number){
+        this.uuid=uuid;
+        this.title=title;
+        this.number= number;
+    }
+
 }

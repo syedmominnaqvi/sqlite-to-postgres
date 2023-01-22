@@ -2,6 +2,8 @@ package com.hansen.sqlitetopostgres.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+
 public interface FileStorageService {
-    void storeFile(MultipartFile file);
+    Path storeFile(MultipartFile file);
 }

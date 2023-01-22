@@ -1,6 +1,7 @@
 package com.hansen.sqlitetopostgres.entity.postgres;
 
 import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TableB")
-@Builder
+@Table(name = "tableb")
 public class TableB {
     @Id
     @Column(name = "id")
@@ -18,10 +18,13 @@ public class TableB {
     @Column(name = "subject")
     private String subject;
 
-    public static TableB transformSQLiteTableB(com.hansen.sqlitetopostgres.entity.sqlite.TableB dto){
-        return TableB.builder()
-                .Id(dto.getId())
-                .subject(dto.getSubject())
-                .build();
+    public TableB()
+    {
+
+    }
+
+    public TableB(long id, String subject){
+        this.Id = id;
+        this.subject = subject;
     }
 }

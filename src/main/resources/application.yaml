@@ -2,14 +2,14 @@ server:
   port: 9098
 
 spring:
-  postgres:
+  data:
+    jpa:
+      show-sql: true
+  datasource:
     url: jdbc:postgresql://localhost:5432/sqlite-to-postgres
     username: postgres
     password: 123456789
-    ddl: auto
-  jpa:
-    properties:
-      hibernate:
-        dialect: com.hansen.sqlitetopostgres.sqlite.SQLiteDialect
+    ddl-auto: none
+    default_schema: public
 
-hibernate.dialect: com.hansen.sqlitetopostgres.sqlite.SQLiteDialect
+hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
