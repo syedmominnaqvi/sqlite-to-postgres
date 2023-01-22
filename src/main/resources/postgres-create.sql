@@ -6,5 +6,5 @@ CREATE TABLE TableA(
 
 CREATE TABLE TableB(
     id BIGINT PRIMARY KEY,
-    subject VARCHAR,
+    subject VARCHAR
 );
