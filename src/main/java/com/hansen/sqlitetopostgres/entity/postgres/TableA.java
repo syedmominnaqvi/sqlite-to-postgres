@@ -2,6 +2,8 @@ package com.hansen.sqlitetopostgres.entity.postgres;
 
 import lombok.Builder;
 import org.hibernate.annotations.Type;
+import org.hibernate.type.PostgresUUIDType;
+import org.hibernate.type.UUIDCharType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +15,7 @@ import java.util.UUID;
 @Table(name = "tablea")
 public class TableA {
     @Id
-    @Type(type="uuid-char")
+    @Type(type="org.hibernate.type.PostgresUUIDType")
     @Column(name = "uuid")
     private UUID uuid;
 

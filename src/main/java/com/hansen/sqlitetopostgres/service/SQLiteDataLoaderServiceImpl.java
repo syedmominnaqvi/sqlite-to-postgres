@@ -25,6 +25,12 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
 
     @Override
     public Data loadSQLiteData(Path pathToSQLite, String uuid) throws IOException, SQLException {
+
+        if(pathToSQLite == null || uuid==null || uuid.equals(""))
+        {
+            throw new RuntimeException("Neither UUID nor path to sqlite file can be null.");
+        }
+
         Connection conn = connect(pathToSQLite);
         Statement stmt  = conn.createStatement();
         ResultSet rs    = stmt.executeQuery(tableAQuery);
@@ -32,9 +38,9 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
 
         while (rs.next()) {
             TableA tableA = new TableA(
-                    UUID.fromString(rs.getString(1)),
-                    rs.getString(2)
-                    ,rs.getInt(3));
+                    UUID.fromString(rs.getString("uuid")),
+                    rs.getString("title")
+                    ,rs.getInt("number"));
             tableAList.add(tableA);
         }
 
@@ -42,12 +48,11 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
         List<TableB> tableBList = new ArrayList<>();
 
         while (rs.next()) {
-            TableB tableB = new TableB(rs.getLong(1) ,rs.getString(2));
+            TableB tableB = new TableB(rs.getLong("id") ,rs.getString("subject"));
             tableBList.add(tableB);
         }
 
         conn.close();
-        Files.delete(pathToSQLite);
 
         return Data.builder()
                 .tableAList(tableAList)
@@ -63,7 +68,6 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
             String url = "jdbc:sqlite:"+SQLiteFilePath.toFile().getAbsolutePath();
             // create a connection to the database
             conn = DriverManager.getConnection(url);
-
             log.info("Connection to SQLite has been established.");
 
         } catch (SQLException e) {

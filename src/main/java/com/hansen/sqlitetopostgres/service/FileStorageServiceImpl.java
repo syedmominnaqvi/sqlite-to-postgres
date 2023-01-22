@@ -2,19 +2,13 @@ package com.hansen.sqlitetopostgres.service;
 
 import com.hansen.sqlitetopostgres.model.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import static java.util.UUID.randomUUID;
 
@@ -33,7 +27,18 @@ public class FileStorageServiceImpl implements FileStorageService{
             log.info("UUID generated: "+uuid);
             Path newFilePath = Files.createFile(Path.of("/tmp/"+uuid+".db"));
             file.transferTo(newFilePath);
-            Data data = dataLoaderService.loadSQLiteData(newFilePath, uuid);
+
+            Data data = null;
+            try {
+               data = dataLoaderService.loadSQLiteData(newFilePath, uuid);
+            }
+            catch (Exception e){
+                log.warn("Error occured while loading SQLite data. Err:"+e.getMessage());
+            }
+            finally {
+                Files.delete(newFilePath);
+            }
+
             postgresPersistenceService.translateToPostgres(data);
             return newFilePath;
         } catch (Exception e) {

@@ -1,17 +1,12 @@
 package com.hansen.sqlitetopostgres.controller;
 
 import com.hansen.sqlitetopostgres.entity.postgres.TableB;
-import com.hansen.sqlitetopostgres.model.Data;
-import com.hansen.sqlitetopostgres.model.ResponseMessage;
 import com.hansen.sqlitetopostgres.repo.postgres.TableBRepository;
 import com.hansen.sqlitetopostgres.service.FileStorageService;
-import com.hansen.sqlitetopostgres.service.PostgresPersistenceService;
-import com.hansen.sqlitetopostgres.service.SQLiteDataLoaderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,7 +33,6 @@ public class SQLiteFileUploadController {
 
         String message = "";
         try {
-            List<TableB> ss = repository.findAll();
             Path pathToTempFile=storageService.storeFile(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             log.info(message);

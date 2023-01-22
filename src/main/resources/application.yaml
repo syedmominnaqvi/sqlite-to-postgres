@@ -4,12 +4,14 @@ server:
 spring:
   data:
     jpa:
-      show-sql: true
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/sqlite-to-postgres
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 123456789
-    ddl-auto: none
+    ddl-auto: create
     default_schema: public
 
 hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
