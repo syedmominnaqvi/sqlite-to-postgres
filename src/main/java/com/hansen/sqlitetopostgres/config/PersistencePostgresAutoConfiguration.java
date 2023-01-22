@@ -2,6 +2,7 @@ package com.hansen.sqlitetopostgres.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 @Configuration
 @PropertySource({"classpath:application.yaml"})
 @EnableJpaRepositories(
-        basePackages = "hansen.sqlitetopostgres",
+        basePackages = "com.hansen.sqlitetopostgres.repo.postgres",
         entityManagerFactoryRef = "postgresEntityManager",
         transactionManagerRef = "postgresTransactionManager")
 public class PersistencePostgresAutoConfiguration {
@@ -36,7 +37,7 @@ public class PersistencePostgresAutoConfiguration {
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(postgresDataSource());
         em.setPackagesToScan(
-                new String[] { "com.hansen.sqlitetopostgres.entity.TableA" , "com.hansen.sqlitetopostgres.entity.TableB"});
+                new String[] { "com.hansen.sqlitetopostgres.entity.postgres"});
 
         HibernateJpaVendorAdapter vendorAdapter
                 = new HibernateJpaVendorAdapter();
@@ -57,11 +58,11 @@ public class PersistencePostgresAutoConfiguration {
 
         DriverManagerDataSource dataSource
                 = new DriverManagerDataSource();
-        dataSource.setDriverClassName(
-                env.getProperty("jdbc.driverClassName"));
+//        dataSource.setDriverClassName(
+//                env.getProperty("jdbc.driverClassName"));
         dataSource.setUrl(env.getProperty("spring.postgres.url"));
         dataSource.setUsername(env.getProperty("spring.postgres.username"));
-        dataSource.setPassword(env.getProperty("jdbc.postgres.password"));
+        dataSource.setPassword(env.getProperty("spring.postgres.password"));
 
         return dataSource;
     }

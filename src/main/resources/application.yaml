@@ -3,6 +3,13 @@ server:
 
 spring:
   postgres:
-    url:
-    username: kimhansen
-    password: K!m Hansen is up#
+    url: jdbc:postgresql://localhost:5432/sqlite-to-postgres
+    username: postgres
+    password: 123456789
+    ddl: auto
+  jpa:
+    properties:
+      hibernate:
+        dialect: com.hansen.sqlitetopostgres.sqlite.SQLiteDialect
+
+hibernate.dialect: com.hansen.sqlitetopostgres.sqlite.SQLiteDialect

@@ -1,4 +1,6 @@
-package com.hansen.sqlitetopostgres.entity;
+package com.hansen.sqlitetopostgres.entity.sqlite;
+
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TableB")
+@Data
 public class TableB {
     @Id
     @Column(name = "id")

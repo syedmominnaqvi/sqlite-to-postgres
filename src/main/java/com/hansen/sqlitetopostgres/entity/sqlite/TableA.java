@@ -1,5 +1,6 @@
-package com.hansen.sqlitetopostgres.entity;
+package com.hansen.sqlitetopostgres.entity.sqlite;
 
+import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TableA")
+@Data
 public class TableA {
     @Id
     @Type(type="uuid-char")

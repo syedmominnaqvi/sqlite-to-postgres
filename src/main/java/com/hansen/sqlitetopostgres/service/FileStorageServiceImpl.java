@@ -18,7 +18,8 @@ public class FileStorageServiceImpl implements FileStorageService{
         try {
             String uuid = String.valueOf(randomUUID());
             log.info("UUID generated: "+uuid);
-            Files.copy(file.getInputStream(), Path.of(uuid));
+            Path newFilePath = Files.createFile(Path.of("/tmp/"+uuid+".db"));
+            Files.copy(file.getInputStream(), newFilePath);
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
