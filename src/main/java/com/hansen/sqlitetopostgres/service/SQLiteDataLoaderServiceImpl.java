@@ -1,16 +1,14 @@
 package com.hansen.sqlitetopostgres.service;
 
 //import com.hansen.sqlitetopostgres.config.PersistenceSQLiteOnDemandConfiguration;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.hansen.sqlitetopostgres.entity.postgres.TableA;
 import com.hansen.sqlitetopostgres.entity.postgres.TableB;
 import com.hansen.sqlitetopostgres.model.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,8 +18,8 @@ import java.util.UUID;
 @Service
 @Slf4j
 public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
-    String tableAQuery = "SELECT * FROM TableA";
-    String tableBQuery = "SELECT * FROM TableB";
+    final String tableAQuery = "SELECT * FROM TableA";
+    final String tableBQuery = "SELECT * FROM TableB";
 
     @Override
     public Data loadSQLiteData(Path pathToSQLite, String uuid) throws IOException, SQLException {
@@ -37,8 +35,8 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
         List<TableA> tableAList = new ArrayList<>();
 
         while (rs.next()) {
-            TableA tableA = new TableA(
-                    UUID.fromString(rs.getString("uuid")),
+            TableA tableA = new TableA(UUID.randomUUID(),
+                    UUID.fromString(uuid),
                     rs.getString("title")
                     ,rs.getInt("number"));
             tableAList.add(tableA);
@@ -48,7 +46,7 @@ public class SQLiteDataLoaderServiceImpl implements SQLiteDataLoaderService{
         List<TableB> tableBList = new ArrayList<>();
 
         while (rs.next()) {
-            TableB tableB = new TableB(rs.getLong("id") ,rs.getString("subject"));
+            TableB tableB = new TableB(UUID.randomUUID(), UUID.fromString(uuid), rs.getLong("id") ,rs.getString("subject"));
             tableBList.add(tableB);
         }
 

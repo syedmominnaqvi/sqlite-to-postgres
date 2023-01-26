@@ -1,9 +1,6 @@
 package com.hansen.sqlitetopostgres.entity.postgres;
 
-import lombok.Builder;
 import org.hibernate.annotations.Type;
-import org.hibernate.type.PostgresUUIDType;
-import org.hibernate.type.UUIDCharType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,10 +11,14 @@ import java.util.UUID;
 @Entity
 @Table(name = "tablea")
 public class TableA {
+
     @Id
     @Type(type="org.hibernate.type.PostgresUUIDType")
     @Column(name = "uuid")
     private UUID uuid;
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    @Column(name = "request_uuid")
+    private UUID request_uuid;
 
     @Column(name = "title")
     private String title;
@@ -30,7 +31,8 @@ public class TableA {
 
     }
 
-    public TableA(UUID uuid, String title, int number){
+    public TableA(UUID uuid, UUID request_uuid, String title, int number){
+        this.request_uuid = request_uuid;
         this.uuid=uuid;
         this.title=title;
         this.number= number;

@@ -1,5 +1,4 @@
 CREATE TABLE TableA(
-    uuid UUID PRIMARY KEY,
     title VARCHAR,
     number BIGINT
 );

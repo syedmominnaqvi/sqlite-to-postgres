@@ -21,7 +21,7 @@ public class FileStorageServiceImpl implements FileStorageService{
     @Autowired
     PostgresPersistenceService postgresPersistenceService;
     @Override
-    public Path storeFile(MultipartFile file) {
+    public void storeFile(MultipartFile file) {
         try {
             String uuid = String.valueOf(randomUUID());
             log.info("UUID generated: "+uuid);
@@ -40,7 +40,6 @@ public class FileStorageServiceImpl implements FileStorageService{
             }
 
             postgresPersistenceService.translateToPostgres(data);
-            return newFilePath;
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");

@@ -1,6 +1,5 @@
 package com.hansen.sqlitetopostgres.controller;
 
-import com.hansen.sqlitetopostgres.entity.postgres.TableB;
 import com.hansen.sqlitetopostgres.repo.postgres.TableBRepository;
 import com.hansen.sqlitetopostgres.service.FileStorageService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Path;
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -31,9 +27,9 @@ public class SQLiteFileUploadController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File cannot be empty");
         }
 
-        String message = "";
+        String message;
         try {
-            Path pathToTempFile=storageService.storeFile(file);
+            storageService.storeFile(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             log.info(message);
             return ResponseEntity.status(HttpStatus.OK).body(message);

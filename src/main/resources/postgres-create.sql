@@ -1,10 +1,13 @@
 CREATE TABLE TableA(
-    uuid UUID PRIMARY KEY,
+    uuid UUID not null primary key,
+    request_uuid UUID NOT NULL ,
     title VARCHAR,
     number BIGINT
 );
 
-CREATE TABLE TableB(
-    id BIGINT PRIMARY KEY,
-    subject VARCHAR
+CREATE TABLE public.tableb (
+	uuid UUID not null primary key,
+	request_uuid uuid NOT NULL,
+	id int8,
+	subject varchar
 );
